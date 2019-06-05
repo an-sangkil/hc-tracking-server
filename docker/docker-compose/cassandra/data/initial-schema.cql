@@ -4,6 +4,8 @@ DROP KEYSPACE IF EXISTS hc_tracking_keyspace;
 -- Create our keyspace
 CREATE KEYSPACE hc_tracking_keyspace WITH replication =  { 'class': 'SimpleStrategy', 'replication_factor': 1 };
 
+
+-- create user hc_server with password 'hc_server1!' superuser;
 -- Use the keyspace
 USE hc_tracking_keyspace;
 
