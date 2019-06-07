@@ -46,7 +46,6 @@ services:
   ##############################################################
   cassandra:
     build: ./cassandra
-    #image: cassandra:3.11
     container_name: cassandra_hc_tracking
     restart: always
     environment:

@@ -1,17 +1,34 @@
-CREATE DATABASE IF NOT EXISTS ad_server;
+-- /////////////////////////////////////////////////////////
+-- // DB 생성
+-- /////////////////////////////////////////////////////////
+--CREATE DATABASE IF NOT EXISTS ad_server;
+--CREATE DATABASE IF NOT EXISTS db_event;
+--CREATE SCHEMA IF NOT EXISTS `ae_report` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE SCHEMA IF NOT EXISTS `hc_tracking` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE SCHEMA IF NOT EXISTS `ae_report` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-ALTER SCHEMA `ad_server`  DEFAULT COLLATE utf8mb4_unicode_ci ;
+-- /////////////////////////////////////////////////////////
+-- //db 코릴레이트 설정
+-- /////////////////////////////////////////////////////////
+--ALTER SCHEMA `ad_server`  DEFAULT COLLATE utf8mb4_unicode_ci ;
 ALTER SCHEMA `hc_tracking`  DEFAULT COLLATE utf8mb4_unicode_ci ;
 
+-- /////////////////////////////////////////////////////////
+-- //사용자 생성
+-- /////////////////////////////////////////////////////////
 create user 'aereport_user'@'%' identified by 'Mezzo12!@';
-create user 'hctracking_user'@'%' identified by 'Mezzo12!@';
+create user 'hctracking_user'@'%' identified by 'Hc_tracking1!@';
 
+-- /////////////////////////////////////////////////////////
+-- //db 에 사용자 접속 권한 부여
+-- /////////////////////////////////////////////////////////
 grant all privileges on hc_tracking.* to hctracking_user@'%';
 flush privileges;
 
 use hc_tracking;
+
+-- ////////////////////////////////////////////
+-- // Table schema
+-- ////////////////////////////////////////////
 
 -- 사용자 정보
 CREATE TABLE users
