@@ -1,4 +1,4 @@
-package com.cjenm.tracking.server.data.jpa;
+package com.cjenm.tracking.server.data.cassandra;
 
 import lombok.Getter;
 import lombok.Setter;

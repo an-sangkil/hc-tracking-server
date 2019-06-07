@@ -1,4 +1,4 @@
-package com.cjenm.tracking.hctrackingserver.config;
+package com.cjenm.tracking.server.config;
 
 import org.springframework.context.annotation.Configuration;
 
