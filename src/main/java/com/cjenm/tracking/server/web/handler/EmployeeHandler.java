@@ -37,6 +37,9 @@ public class EmployeeHandler {
   }
 
   public Mono<ServerResponse> findAllEmployee(ServerRequest request) {
+    var dataStringTest = "1";
+    var dataIntegerTest = 1;
+
     Flux<Employee> employeeFlux = employeeService.findAllEmployee();
     return ServerResponse.ok().body(employeeFlux, Employee.class);
   }
@@ -59,8 +62,7 @@ public class EmployeeHandler {
 
     return employeeMono
         .flatMap(data -> ServerResponse.ok().syncBody(data))
-        .onErrorResume(e -> Mono.just("{ status : error }")
-            .flatMap(s -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(s)));
+        .onErrorResume(e -> Mono.just("{ status : error }").flatMap(s -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(s)));
 
         /*ServerResponse.ok().body(employeeMono
             .onErrorReturn()

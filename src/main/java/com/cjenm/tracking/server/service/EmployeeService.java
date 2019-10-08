@@ -36,6 +36,13 @@ public class EmployeeService {
     return employeeJpaRepository.save(employee);
   }
 
+  public Flux<Employee> saveEmployee(Mono<Employee> employees) {
+    return employeeJpaRepository.insert(employees);
+  }
+  public Flux<Employee> saveEmployeeBatch(Flux<Employee> employees) {
+    return employeeJpaRepository.insert(employees);
+  }
+
   /**
    * Mono 에러 테스트
    */
