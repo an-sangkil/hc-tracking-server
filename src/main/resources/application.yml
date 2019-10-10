@@ -18,6 +18,14 @@ spring:
     jpa:
       repositories:
         enabled: true
+  kafka:
+    bootstrap-servers: ["210.221.235.202:9092","210.221.235.193:9092","210.221.235.208:9092"]
+    producer:
+      retries: 0
+    consumer:
+      group-id: aereport
+    listener:
+      concurrency: 5
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -75,8 +83,8 @@ logging:
   level:
     root: INFO
     com.cjenm.tracking: DEBUG
-    org.springframework: DEBUG
+    org.springframework: INFO
     org.hibernate: DEBUG
     org.hibernate.type: DEBUG #TRACE
     org.hibernate.type.BasicTypeRegistry : WARN
-    web: debug
+    web: info
