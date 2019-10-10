@@ -1,4 +1,4 @@
-package com.cjenm.tracking.server.config;
+package com.tracking.server.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import javax.annotation.Resource;

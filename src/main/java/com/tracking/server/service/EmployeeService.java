@@ -1,7 +1,7 @@
-package com.cjenm.tracking.server.service;
+package com.tracking.server.service;
 
-import com.cjenm.tracking.server.data.cassandra.Employee;
-import com.cjenm.tracking.server.repository.jpa.EmployeeJpaRepository;
+import com.tracking.server.data.cassandra.Employee;
+import com.tracking.server.repository.jpa.EmployeeJpaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

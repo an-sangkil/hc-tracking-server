@@ -1,4 +1,4 @@
-package com.cjenm.tracking.server.service;
+package com.tracking.server.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;

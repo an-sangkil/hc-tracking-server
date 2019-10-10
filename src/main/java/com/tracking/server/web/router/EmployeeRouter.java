@@ -1,6 +1,6 @@
-package com.cjenm.tracking.server.web.router;
+package com.tracking.server.web.router;
 
-import com.cjenm.tracking.server.web.handler.EmployeeHandler;
+import com.tracking.server.web.handler.EmployeeHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 

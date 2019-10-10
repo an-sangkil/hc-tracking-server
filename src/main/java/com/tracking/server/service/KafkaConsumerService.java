@@ -1,6 +1,6 @@
-package com.cjenm.tracking.server.service;
+package com.tracking.server.service;
 
-import com.cjenm.tracking.server.web.handler.KafkaHandler;
+import com.tracking.server.web.handler.KafkaHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;

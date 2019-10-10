@@ -1,6 +1,6 @@
-package com.cjenm.tracking.server.repository.jpa;
+package com.tracking.server.repository.jpa;
 
-import com.cjenm.tracking.server.data.cassandra.Employee;
+import com.tracking.server.data.cassandra.Employee;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 
 /**

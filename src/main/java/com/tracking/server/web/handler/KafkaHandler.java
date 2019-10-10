@@ -1,6 +1,6 @@
-package com.cjenm.tracking.server.web.handler;
+package com.tracking.server.web.handler;
 
-import com.cjenm.tracking.server.service.KafkaProducerService;
+import com.tracking.server.service.KafkaProducerService;
 import java.util.stream.IntStream;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

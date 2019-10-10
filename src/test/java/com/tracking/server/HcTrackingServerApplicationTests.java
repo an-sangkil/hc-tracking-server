@@ -1,4 +1,4 @@
-package com.cjenm.tracking.server;
+package com.tracking.server;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
