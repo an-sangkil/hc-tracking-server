@@ -1,6 +1,9 @@
 package com.tracking.server.service;
 
+import com.tracking.server.config.LogMaker;
+import com.tracking.server.model.LogModel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ public class KafkaProducerService {
 
   private KafkaTemplate<String, String> kafkaTemplate;
 
+  @Autowired
   public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate) {
     this.kafkaTemplate = kafkaTemplate;
   }

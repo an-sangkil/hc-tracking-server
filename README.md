@@ -8,13 +8,13 @@ build argument 지정 방식
 2. gradle build 실행
 3. docker build 및 실행
 ```bash
+  # docker build option 순서는 -- > - 순으로 데쉬가 많은것 부터 선언하여 사용할것.
+  # docker build -t {image name}:{tag name} ${docker filr path}
+
   sudo gradle build bootJar -x
   sudo docker build -t server-other1/hc-tracking-server .
   sudo docker images
   sudo docker run --name tracking.server.other1 -p 80:8080 -t server-other1/hc-tracking-server
-  
-  # docker option 순서는 -- > - 순으로 데쉬가 많은것 부터 선언하여 사용할것.
-  # docker build -t {imageName}:{tagName} .
   
   docker {start/stop} {container name /container id}
   
@@ -30,7 +30,7 @@ build argument 명령어 외부 주입 방식
   gradle build bootJar -x test --info
   docker build --build-arg JAR_FILE=build/libs/hc-tracking-server-0.0.1-SNAPSHOT.jar -t server-other2/hc-tracking-server .
   sudo docker images
-  docker run --name tracking.server.other2 -p 80:8080 -t server-other2/hc-tracking-server
+  docker run -e "-Xmx3g -Xms3g" --name tracking.server.other2 -p 80:8080 -t server-other2/hc-tracking-server
   
   docker {start/stop} {container name /container id}
   

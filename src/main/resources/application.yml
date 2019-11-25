@@ -52,6 +52,15 @@ spring:
 
   main:
     web-application-type: reactive
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+    log-request-details: true
+
+#----------------------------------------------------
+# Netty Server Configuration
+#----------------------------------------------------
 
 
 #----------------------------------------------------
