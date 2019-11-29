@@ -21,7 +21,7 @@ spring:
   kafka:
     bootstrap-servers: ["210.221.235.202:9092","210.221.235.193:9092","210.221.235.208:9092"]
     producer:
-      retries: 0
+      retries: 3
     consumer:
       group-id: aereport
     listener:

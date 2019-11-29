@@ -1,4 +1,4 @@
-package com.tracking.server.model;
+package com.tracking.server.data.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
