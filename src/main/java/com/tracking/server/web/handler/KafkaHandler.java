@@ -1,19 +1,22 @@
 package com.tracking.server.web.handler;
 
-import com.tracking.server.service.KafkaProducerService;
-import java.util.stream.IntStream;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tracking.server.data.model.LogModel;
+import com.tracking.server.service.pubsub.KafkaProducerService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.server.RequestPredicates;
-import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.RouterFunctions;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 
 /**
  * <pre>
- * Description :
+ * Description : 카프카 핸들러 및 라우터
  *
  *
  * </pre>
@@ -23,31 +26,50 @@ import reactor.core.publisher.Mono;
  * @since 2019-10-07
  */
 @Component
+@Slf4j
 public class KafkaHandler {
+    private ApplicationContext applicationContext;
 
-  private KafkaProducerService kafkaProducerService;
+    public static final String TOPIC_NAME_AD = "advertising";
+    public static final String TOPIC_NAME_LOG = "log_topic";
 
-  public static final String TOPIC_NAME = "advertising";
+    @Autowired
+    public KafkaHandler(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> kafkaRouterFunction(KafkaHandler kafkaHandler) {
+        return RouterFunctions.route(RequestPredicates.path("/kafka/sender1"), kafkaHandler::kafkaTest);
+    }
+
+    private Mono<ServerResponse> kafkaTest(ServerRequest serverRequest) {
+
+        String param1 = serverRequest.queryParam("param1").orElseGet(() -> "");
+        LogModel logModel= new LogModel();
+        logModel.setTime(LocalDateTime.now());
+        logModel.setClicks(79000000L);
+        logModel.setImpressions(150000000L);
+        logModel.setSpend(300000000L);
+        logModel.setVideoViews(2000000L);
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String data = objectMapper.writeValueAsString(logModel);
+
+            KafkaProducerService kafkaProducerService = applicationContext.getBean(KafkaProducerService.class);
+            kafkaProducerService.sender(TOPIC_NAME_AD, data);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-  public KafkaHandler(KafkaProducerService kafkaProducerService) {
-    this.kafkaProducerService = kafkaProducerService;
-  }
-
-  @Bean
-  public RouterFunction<ServerResponse> kafkaRouterFunction(KafkaHandler kafkaHandler) {
-    return RouterFunctions.route(RequestPredicates.path("/kafka/sender1"), kafkaHandler::producer)
-        ;
-  }
-
-  private Mono<ServerResponse> producer(ServerRequest serverRequest) {
-
-    IntStream.rangeClosed(1, 100).parallel().forEach(value -> {
-      kafkaProducerService.sender(TOPIC_NAME, "data" + value);
-    });
-
-    return ServerResponse.ok().syncBody("{code:SUCCESS}");
-  }
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .syncBody("{code:SUCCESS}")
+                .onErrorResume(e -> Mono.just("{ status : error }").flatMap(s -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(s)));
+    }
 
 
 }

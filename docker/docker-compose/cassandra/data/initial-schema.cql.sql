@@ -35,3 +35,13 @@ CREATE TABLE employee (
 );
 
 
+create table access_log
+(
+	id text primary key,
+	clicks bigint,
+	ctr double,
+	impressions bigint,
+	spend decimal,
+	time timestamp,
+	videoviews bigint
+)

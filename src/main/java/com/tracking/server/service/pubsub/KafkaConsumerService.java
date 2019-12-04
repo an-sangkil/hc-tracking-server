@@ -1,5 +1,6 @@
-package com.tracking.server.service;
+package com.tracking.server.service.pubsub;
 
+import com.tracking.server.config.LogMaker;
 import com.tracking.server.web.handler.KafkaHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 /**
  * <pre>
  * Description : 메세지 구독자
+ *
+ *               Topic 생성시 partitions 갯수를 늘리지 않으면, 리스너가 많더라도 하나의 리스너만 동작 한다.
+ *               
  *
  *
  * </pre>
@@ -27,16 +31,17 @@ public class KafkaConsumerService {
    * @param consumerRecord
    */
   @KafkaListener(
-      groupId = "report-1",
+      groupId = "aereport",
       id = "id-report-1",
       topicPartitions = {
-          @TopicPartition(topic = KafkaHandler.TOPIC_NAME, partitions = {"0", "1"})
+          @TopicPartition(topic = KafkaHandler.TOPIC_NAME_AD, partitions = {"0", "1"})
       },
       autoStartup = "true"
   )
   public void receiveTopic1(ConsumerRecord consumerRecord) {
     log.info("receive on topic - 1 = {}", consumerRecord.toString());
-
+    String logData = (String) consumerRecord.value();
+    log.info(LogMaker.accessMaker, logData);
   }
 
   /**
@@ -44,11 +49,12 @@ public class KafkaConsumerService {
    * @param consumerRecord
    */
   @KafkaListener(
-      groupId = "report-1",
+      groupId = "aereport",
       id = "id-report-2",
       topicPartitions = {
-          @TopicPartition(topic = KafkaHandler.TOPIC_NAME, partitions = {"1"}),
-          @TopicPartition(topic = KafkaHandler.TOPIC_NAME, partitions = {"2", "3"})
+              @TopicPartition(topic = KafkaHandler.TOPIC_NAME_AD, partitions = {"0"}),
+          @TopicPartition(topic = KafkaHandler.TOPIC_NAME_AD, partitions = {"1"}),
+          @TopicPartition(topic = KafkaHandler.TOPIC_NAME_AD, partitions = {"2", "3"})
       },
       autoStartup = "true"
 
@@ -62,16 +68,16 @@ public class KafkaConsumerService {
    * @param consumerRecord
    */
   @KafkaListener(
-      groupId = "report-1",
+      groupId = "aereport",
       id = "id-report-3",
       topicPartitions = {
-          @TopicPartition(topic = KafkaHandler.TOPIC_NAME, partitions = {"4","5"}),
+          @TopicPartition(topic = KafkaHandler.TOPIC_NAME_AD, partitions = {"4","5"}),
       },
       autoStartup = "true"
 
   )
   public void receiveTopic5(ConsumerRecord consumerRecord) {
-    log.info("receive on topic - 5 = {}", consumerRecord.toString());
+    log.info("receive on topic - 3 = {}", consumerRecord.toString());
 
   }
 
