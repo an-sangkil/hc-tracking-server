@@ -1,7 +1,8 @@
 package com.tracking.server.web.handler;
 
 import com.tracking.server.data.model.LogModel;
-import com.tracking.server.service.AccessLogProducerService;
+import com.tracking.server.service.pubsub.AccessLogProducerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
  * @since 2019-11-29
  */
 @Component
+@Slf4j
 public class AccessLogHandler {
 
     private AccessLogProducerService accessLogProducerService;
@@ -35,9 +37,12 @@ public class AccessLogHandler {
     public Mono<ServerResponse> accessLog(ServerRequest serverRequest) {
 
         String param1 = serverRequest.queryParam("param1").orElseGet(() -> "");
-        String data = new LogModel("param1", param1, LocalDateTime.now()).toJson();
-        accessLogProducerService.sender(data);
+        log.info("request parameters = {}", param1);
 
+        LogModel logModel = new LogModel();
+        logModel.setTime(LocalDateTime.now());
+        var data = logModel.toJson();
+        accessLogProducerService.sender(data);
 
         return ServerResponse
                 .ok()

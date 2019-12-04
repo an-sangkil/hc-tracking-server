@@ -57,6 +57,9 @@ spring:
       charset: utf-8
       enabled: true
     log-request-details: true
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
 
 #----------------------------------------------------
 # Netty Server Configuration

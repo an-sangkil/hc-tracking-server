@@ -1,11 +1,9 @@
-package com.tracking.server.service;
+package com.tracking.server.service.pubsub;
 
 import com.tracking.server.config.LogMaker;
 import com.tracking.server.web.handler.KafkaHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Service;

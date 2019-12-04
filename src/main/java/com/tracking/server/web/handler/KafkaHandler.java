@@ -1,7 +1,8 @@
 package com.tracking.server.web.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracking.server.data.model.LogModel;
-import com.tracking.server.service.KafkaProducerService;
+import com.tracking.server.service.pubsub.KafkaProducerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -39,17 +40,29 @@ public class KafkaHandler {
 
     @Bean
     public RouterFunction<ServerResponse> kafkaRouterFunction(KafkaHandler kafkaHandler) {
-        return RouterFunctions.route(RequestPredicates.path("/kafka/sender1"), kafkaHandler::producer)
-                ;
+        return RouterFunctions.route(RequestPredicates.path("/kafka/sender1"), kafkaHandler::kafkaTest);
     }
 
-    private Mono<ServerResponse> producer(ServerRequest serverRequest) {
+    private Mono<ServerResponse> kafkaTest(ServerRequest serverRequest) {
 
         String param1 = serverRequest.queryParam("param1").orElseGet(() -> "");
-        String data = new LogModel("param1", param1, LocalDateTime.now()).toJson();
+        LogModel logModel= new LogModel();
+        logModel.setTime(LocalDateTime.now());
+        logModel.setClicks(79000000L);
+        logModel.setImpressions(150000000L);
+        logModel.setSpend(300000000L);
+        logModel.setVideoViews(2000000L);
 
-        KafkaProducerService kafkaProducerService = applicationContext.getBean(KafkaProducerService.class);
-        kafkaProducerService.sender(TOPIC_NAME_AD, data);
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String data = objectMapper.writeValueAsString(logModel);
+
+            KafkaProducerService kafkaProducerService = applicationContext.getBean(KafkaProducerService.class);
+            kafkaProducerService.sender(TOPIC_NAME_AD, data);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         return ServerResponse
                 .ok()

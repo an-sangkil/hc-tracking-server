@@ -36,6 +36,11 @@ public class EmployeeHandler {
     this.employeeService = employeeService;
   }
 
+  /**
+   * 비동기 논블라킹  - 전체 조회
+   * @param request
+   * @return
+   */
   public Mono<ServerResponse> findAllEmployee(ServerRequest request) {
     var dataStringTest = "1";
     var dataIntegerTest = 1;
@@ -44,6 +49,11 @@ public class EmployeeHandler {
     return ServerResponse.ok().body(employeeFlux, Employee.class);
   }
 
+  /**
+   * 비동기 논블라킹  - 저장
+   * @param serverRequest
+   * @return
+   */
   public Mono<ServerResponse> saveEmployee(ServerRequest serverRequest) {
     Mono<String> responseMessage = Mono.empty();
     Mono<Employee> employeeMono = Mono.empty();
@@ -71,12 +81,16 @@ public class EmployeeHandler {
 
   }
 
-
+  /**
+   * Exception Handling Example - 1
+   * @param serverRequest
+   * @return
+   */
   public Mono<ServerResponse> fallbackExcpotionCase1(ServerRequest serverRequest) {
     Mono<Employee> employeeMono = Mono.empty();
     if (serverRequest.queryParam("type").get().equals("1")) {
       // 글로벌 익셉션 오류 이며 Mono 에러로 잡히지 않음
-      throw new RuntimeException("");
+      throw new RuntimeException("에러가 발생 되었습니다. ");
     }
 
     // 강제로 Mono error Exception 발생

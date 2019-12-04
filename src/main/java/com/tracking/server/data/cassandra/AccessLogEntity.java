@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -29,18 +30,39 @@ public class AccessLogEntity {
 
     @PrimaryKey
     private String id;
-    private String value;
-    private String data;
+
     private LocalDateTime time;
 
-    public String toJson() {
+    /**
+     * 노출수.
+     */
+    private Long impressions;
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return null;
-        }
+    /**
+     * 클릭수.
+     */
+    private Long clicks;
 
-    }
+    /**
+     * 광고대비클릭율.
+     */
+    private Double ctr;
+
+    /**
+     * 동영상 조회수.
+     */
+    private Long videoViews;
+
+    /**
+     * VTR (조회율).
+     */
+    @Transient
+    private Double vtr;
+
+    /**
+     * 비용(집행금액).
+     */
+    private Long spend;
+
+
 }

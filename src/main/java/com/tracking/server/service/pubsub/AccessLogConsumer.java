@@ -1,4 +1,4 @@
-package com.tracking.server.service;
+package com.tracking.server.service.pubsub;
 
 /**
  * <pre>
@@ -12,12 +12,11 @@ package com.tracking.server.service;
  * @since 2019-11-29
  */
 
-import com.tracking.server.config.LogMaker;
+import com.tracking.server.service.AccessLogService;
 import com.tracking.server.web.handler.KafkaHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Service;
@@ -38,12 +37,18 @@ import org.springframework.stereotype.Service;
 public class AccessLogConsumer {
 
     private AccessLogService accessLogService;
+
+    @Autowired
+    public AccessLogConsumer(AccessLogService accessLogService) {
+        this.accessLogService = accessLogService;
+    }
+
     /**
      * 카프카 파티션이 0,1 번인 것만 리슨, 시작시 바로 실행
      * @param consumerRecord
      */
     @KafkaListener(
-//            groupId = "log-group",
+            groupId = "log-group",
             id = "id-log-1",
             topicPartitions = {
                     @TopicPartition(topic = KafkaHandler.TOPIC_NAME_LOG, partitions = {"0", "1"})

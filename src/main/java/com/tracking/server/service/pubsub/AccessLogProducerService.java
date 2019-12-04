@@ -1,4 +1,4 @@
-package com.tracking.server.service;
+package com.tracking.server.service.pubsub;
 
 import com.tracking.server.web.handler.KafkaHandler;
 import org.springframework.beans.factory.annotation.Autowired;
