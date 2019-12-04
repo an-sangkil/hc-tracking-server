@@ -16,4 +16,6 @@ import org.springframework.data.cassandra.repository.ReactiveCassandraRepository
  */
 public interface EmployeeJpaRepository  extends ReactiveCassandraRepository<Employee,Integer> {
 
+
+
 }
