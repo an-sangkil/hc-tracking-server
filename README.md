@@ -1,5 +1,8 @@
-# springboot.webflux.apiserver
+# hc-tracking-apiserver
 고성능 API 서버 (high performance API server)
+- Spring Boot의 WebFlux
+- Cassandra
+- kafka
 
 ### Spring boot docker : docker file other 1 방식 
 build argument 지정 방식
